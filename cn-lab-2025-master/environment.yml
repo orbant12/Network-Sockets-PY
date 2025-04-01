@@ -1,0 +1,6 @@
+name: computer-networks-lab
+channels:
+  - defaults
+dependencies:
+  - pip=25.0
+  - python=3.11.11
