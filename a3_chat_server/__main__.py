@@ -13,7 +13,6 @@ server_socket = None
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
@@ -208,7 +207,6 @@ def handle_client(client_socket: socket.socket) -> None:
 
                 buffer += data
 
-                # Process complete messages (ending with \n)
                 while b'\n' in buffer:
                     message, buffer = buffer.split(b'\n', 1)
                     message = message.decode('utf-8')
