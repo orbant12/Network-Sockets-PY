@@ -40,10 +40,10 @@ def parse_arguments() -> Namespace:
     return parser.parse_args()
 
 def parse_request(request_data):
-
+    """Parse the HTTP request headers."""
     request = {}
 
-    # Split the request -> into lines
+    # Split the request into lines
     lines = request_data.decode('utf-8', errors='replace').split('\r\n')
 
     if not lines:
@@ -69,7 +69,7 @@ def parse_request(request_data):
     return request
 
 def send_response(client_socket, status_code, content, content_type, keep_alive=False):
-
+    """Send an HTTP response."""
     status_message = {
         200: 'OK',
         201: 'Created',
@@ -206,16 +206,17 @@ def handle_get_request(client_socket, request):
 
 
 def handle_client(client_socket, client_address):
-
+    """Handle a client connection."""
     global is_running
 
     keep_alive = True
 
     while keep_alive and is_running:
         try:
-
+            # Set a timeout for the client socket
             client_socket.settimeout(10.0)
 
+            # Receive and parse the request
             request_data = b''
             while b'\r\n\r\n' not in request_data:
                 chunk = client_socket.recv(1024)
@@ -228,7 +229,7 @@ def handle_client(client_socket, client_address):
                 keep_alive = False
                 break
 
-            # Parse -> HTTP headers
+            # Parse the HTTP headers
             request = parse_request(request_data)
 
             if (
